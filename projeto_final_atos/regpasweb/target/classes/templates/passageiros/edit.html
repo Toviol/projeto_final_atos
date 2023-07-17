@@ -1,0 +1,107 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" rel="stylesheet">
+    <link rel="stylesheet" href="/CSS/estilos.css"> <!-- Arquivo CSS externo -->
+    <title th:text="'Editar Passageiro ' + ${passageiroId}"></title>
+    <script src="/CSS/validacao.js"></script>
+    <script>
+        function formatarTelefone(input) {
+            // Remove qualquer caractere que não seja um dígito
+            var phoneNumber = input.value.replace(/\D/g, '');
+
+            // Obtém a posição do cursor
+            var cursorPosition = input.selectionStart;
+
+            // Verifica se o campo está vazio ou se a posição do cursor está no final
+            if (phoneNumber.length === 0 || cursorPosition === phoneNumber.length + 1) {
+                // Atualiza o valor do input com o número de telefone formatado
+                input.value = phoneNumber;
+            } else {
+                // Formatação "(99)99999-9999"
+                var formattedPhoneNumber = '(' + phoneNumber.substring(0, 2) + ')' +
+                    phoneNumber.substring(2, 7) + '-' +
+                    phoneNumber.substring(7, 11);
+
+                // Atualiza o valor do input com o número de telefone formatado
+                input.value = formattedPhoneNumber;
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <!--<h1 th:replace="~{fragmentos :: h1('Editar Passageiro #')}"></h1>-->
+        <h1 th:text="'Editar Passageiro ' + ${passageiroId}"></h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <form th:object="${requisicaoEditPassageiro}"  th:action="@{/passageiros/{passageiroId}(passageiroId = ${passageiroId})}" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Nome</label>
+                    <input class="form-control" type="text" th:field="*{nome}" required>
+                    <div></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Sobrenome</label>
+                    <input class="form-control" type="text" th:field="*{sobrenome}" required>
+                    <div></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Registro Geral (RG)</label>
+                    <input class="form-control" type="number" th:field="*{rg}" required>
+                    <div></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Telefone</label>
+                    <input class="form-control" type="text" th:field="*{telefone}" oninput="formatarTelefone(this)" required>
+                    <div></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Data de Nascimento</label>
+                    <input class="form-control" type="date" th:field="*{nascimento}" onfocus="this.max = new Date().toISOString().split('T')[0];" required>
+                    <div></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ônibus</label>
+                    <select class="form-select" th:field="*{onibus}">
+                        <option th:value="${NULL}">Não Alocado</option>
+                        <option th:value="${1}" th:text="${1}"></option>
+                        <option th:value="${2}" th:text="${2}"></option>
+                        <option th:value="${3}" th:text="${3}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Pagamento</label>
+                    <select class="form-select" th:field="*{pagamento}">
+                        <option th:value="${'Pendente'}">Pendente</option>
+                        <option th:value="${'Pago'}">Pago</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Preferência (6 ou 7 dias)</label>
+                    <select class="form-select" th:field="*{statusPassageiro}">
+                        <option th:each="status : ${listaStatusPassageiro}"
+                                th:value="${status}" th:text="${status}"></option>
+                    </select>
+                </div>
+                <button class="btn btn-primary pull-right" type="submit">Submeter</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script crossorigin="anonymous"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

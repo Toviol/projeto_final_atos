@@ -1,0 +1,37 @@
+body {
+    background-color: #111111; /* cinza quase preto */
+}
+
+table {
+    margin: 0 auto; /* centralizar a tabela */
+    font-size: 0.9em;
+    font-family: sans-serif;
+    border: 1px solid red; /* borda vermelha */
+    border-spacing: 10px; /* espaçamento entre as colunas*/
+    border-radius: 20px 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+th, td {
+    padding: 5px; /* espaçamento interno das células*/
+    color: aliceblue;
+}
+/*Botão Download*/
+.btn-download {
+    background-color: #05a089;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.btn-download:hover {
+    background-color: #09dba3;
+}
+.central{
+    text-align: center;
+    align-items: center;
+    margin: auto;
+}

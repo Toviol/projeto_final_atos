@@ -1,0 +1,104 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link href="/CSS/lista2.css" th:href="@{/CSS/lista2.css}" rel="stylesheet"/>
+  <!--Botão-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Title</title>
+</head>
+<body>
+<div class="buttons">
+  <a href="/home" class="button">Home</a>
+  <a href="/passageiros" class="button">Todos Passageiros</a>
+  <a href="/passageiros/onibus1" class="button">Ônibus 1</a>
+  <a href="/passageiros/onibus2" class="button">Ônibus 2</a>
+  <a href="/passageiros/onibus3" class="button">Ônibus 3</a>
+  <a href="/passageiros/sem-onibus" class="button">Sem Ônibus</a>
+</div>
+<div class="central_table">
+  <main class="table">
+    <section class="table__header">
+      <h1>Ônibus 2 <span id="contador-onibus" class="cinza" style="margin-left: 10px;"></span><span class="cinza">/44</span></h1>
+      <div class="input-group">
+        <input type="search" placeholder="Pesquisar...">
+        <img src="/CSS/images/search.png" alt="">
+      </div>
+      <div class="export__file">
+        <button for="export-file" id="pdf" class="export__file-btn" title="Export File"></button>
+      </div>
+    </section>
+    <section class="table__body">
+      <table>
+        <thead>
+        <tr>
+          <th> ID <span class="icon-arrow">&UpArrow;</span></th>
+          <th> Nome <span class="icon-arrow">&UpArrow;</span></th>
+          <th> Sobrenome <span class="icon-arrow">&UpArrow;</span></th>
+          <th> RG <span class="icon-arrow">&UpArrow;</span></th>
+          <th> Telefone <span class="icon-arrow">&UpArrow;</span></th>
+          <th> Nascimento <span class="icon-arrow">&UpArrow;</span></th>
+          <th> Dias <span class="icon-arrow">&UpArrow;</span></th>
+          <th> Pagamento <span class="icon-arrow">&UpArrow;</span></th>
+          <th> RG(Foto/Pdf) </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="passageiro : ${passageiros}">
+          <th th:text="${passageiro.getId()}"></th>
+          <td th:text="${passageiro.nome}">João</td>
+          <td th:text="${passageiro.sobrenome}">João</td>
+          <td th:text="${passageiro.rg}">123456789</td>
+          <td th:text="${passageiro.telefone}"></td>
+          <td th:text="${passageiro.nascimento}"></td>
+          <td th:text="${passageiro.statusPassageiro}"></td>
+          <td id="thToHide" style="display: none;" th:text="${passageiro.onibus}" class="central"></td>
+          <td>
+                    <span th:class="${passageiro.pagamento == 'Pago'} ? 'status-pago' : 'status-pendente'">
+                        <span th:text="${passageiro.pagamento}"></span>
+                    </span>
+          </td>
+          <td class="block">
+            <!-- Botão de download da imagem -->
+            <a th:href="@{'/passageiros/download/' + ${passageiro.id}}"
+               class="btn-download botaoo"><i class="fa fa-download"></i></a>
+            <a class="col-1 padding btn btn-success btn-sm rounded-0" data-toggle="tooltip" data-placement="top" title="Edit" th:href="@{/passageiros/{passageiroId}/edit(passageiroId = ${passageiro.id})}"><i class="fa fa-edit botao-verde"></i></a>
+            <a class="col-1 padding btn btn-danger btn-sm rounded-0" data-toggle="tooltip" data-placement="top" title="Delete" th:href="@{/passageiros/{passageiroId}/delete(passageiroId = ${passageiro.id})}"><i class="fa fa-trash botao-vermelho"></i></a>
+          </td>
+
+
+        </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const tableRows = document.querySelectorAll('tbody tr');
+    const contadorOnibusElement = document.getElementById('contador-onibus');
+
+    function filtrarPorOnibusUm() {
+      let contador = 0;
+
+      tableRows.forEach((row) => {
+        const onibusColumn = row.querySelector('.central');
+        const onibusValue = onibusColumn.textContent.trim();
+
+        if (onibusValue === '2') {
+          row.style.display = 'table-row';
+          contador++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      contadorOnibusElement.textContent = contador;
+    }
+
+    filtrarPorOnibusUm();
+  });
+</script>
+<script src="/CSS/animacoes.js"></script>
+</body>
+</html>

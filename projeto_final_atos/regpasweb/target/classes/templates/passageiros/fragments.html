@@ -1,0 +1,37 @@
+<head th:fragment="head(titulo)">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" rel="stylesheet">
+
+    <title th:text="${titulo}"> JDJJ</title>
+    <script src="/CSS/validacao.js"></script>
+    <script>
+        function formatarTelefone(input) {
+            // Remove qualquer caractere que não seja um dígito
+            var phoneNumber = input.value.replace(/\D/g, '');
+
+            // Obtém a posição do cursor
+            var cursorPosition = input.selectionStart;
+
+            // Verifica se o campo está vazio ou se a posição do cursor está no final
+            if (phoneNumber.length === 0 || cursorPosition === phoneNumber.length + 1) {
+                // Atualiza o valor do input com o número de telefone formatado
+                input.value = phoneNumber;
+            } else {
+                // Formatação "(99)99999-9999"
+                var formattedPhoneNumber = '(' + phoneNumber.substring(0, 2) + ')' +
+                    phoneNumber.substring(2, 7) + '-' +
+                    phoneNumber.substring(7, 11);
+
+                // Atualiza o valor do input com o número de telefone formatado
+                input.value = formattedPhoneNumber;
+            }
+        }
+    </script>
+</head>
+<h1 th:fragment="h1(titulo)">
+
+</h1>
