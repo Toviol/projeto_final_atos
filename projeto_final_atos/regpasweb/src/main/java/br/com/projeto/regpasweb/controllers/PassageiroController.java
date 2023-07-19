@@ -114,7 +114,7 @@ public class PassageiroController {
         mv.addObject("passageiros", passageiros);
         return mv;
     }
-
+    //Mapping para futuras adições no projeto
     @GetMapping("/home")
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView("passageiros/home");
